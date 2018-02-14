@@ -10,6 +10,10 @@
     <artifactId>test-base</artifactId>
     <version>1.28.3-SNAPSHOT</version>
 
+    <properties>
+        <target.java.version>1.8</target.java.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -24,6 +28,11 @@
         <dependency>
             <groupId>net.javacrumbs.json-unit</groupId>
             <artifactId>json-unit-fluent</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.json-unit</groupId>
+            <artifactId>json-unit-assertj</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
