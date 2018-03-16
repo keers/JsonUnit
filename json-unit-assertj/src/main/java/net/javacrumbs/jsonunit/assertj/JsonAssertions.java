@@ -16,9 +16,15 @@
 package net.javacrumbs.jsonunit.assertj;
 
 import net.javacrumbs.jsonunit.core.Configuration;
+import net.javacrumbs.jsonunit.core.internal.JsonUtils;
+import net.javacrumbs.jsonunit.core.internal.Path;
 
 public class JsonAssertions {
     public static JsonAssert assertThatJson(Object actual) {
-      return new JsonAssert("", Configuration.empty(), actual);
+      return new JsonAssert(Path.create(""), Configuration.empty(), actual);
     }
+
+    public static Object json(Object input) {
+         return JsonUtils.convertToJson(input, "", true).getValue();
+     }
 }

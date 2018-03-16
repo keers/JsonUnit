@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.javacrumbs.jsonunit.assertj;
+package net.javacrumbs.jsonunit.assertj.internal;
 
-import org.assertj.core.api.MapAssert;
+import net.javacrumbs.jsonunit.core.internal.Node;
+import org.assertj.core.presentation.StandardRepresentation;
 
 import java.util.Map;
 
-public class JsonObjectAssert extends MapAssert<String, Object> {
-    public JsonObjectAssert(Map<String, Object> actual) {
-        super(actual);
+public class JsonRepresentation extends StandardRepresentation {
+    @Override
+    protected String toStringOf(Map<?, ?> map) {
+        if (map instanceof Node.JsonMap) {
+            return map.toString();
+        } else {
+            return super.toStringOf(map);
+        }
     }
 }

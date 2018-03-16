@@ -68,6 +68,14 @@ public final class Path {
         return copy(path + "[" + i + "]");
     }
 
+    public Path to(String name) {
+        if (name.startsWith("[")){
+            return copy(path + name);
+        } else {
+            return toField(name);
+        }
+    }
+
     public String toString() {
         if (pathPrefix.isEmpty()) {
             return path;
