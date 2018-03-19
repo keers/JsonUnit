@@ -27,7 +27,7 @@ public abstract class AbstractAssertJTest {
     @Test
     public void exceptionTest() {
         try {
-            assertThatJson("{\"b\":1}").isEqualTo(json("{'a':'${json-unit.ignore}'}"));
+            assertThatJson("{\"a\":{\"b\": 1}}").node("a").isObject().isEqualTo(json("{\"b\": 2}"));
         } catch (Throwable e) {
             System.out.println(e.getMessage());
         }
@@ -46,13 +46,15 @@ public abstract class AbstractAssertJTest {
     @Test
     public void shouldAssertObjectJson() {
         assertThatThrownBy(() -> assertThatJson("{\"a\":{\"b\": 1}}").node("a").isObject().isEqualTo(json("{\"b\": 2}")))
-            .hasMessage("[Different value found in node \"a\"] \n" +
-                "Expecting:\n" +
-                " <{\"b\":1}>\n" +
-                "to be equal to:\n" +
-                " <{\"b\":2}>\n" +
-                "when comparing values using JsonComparator\n" +
-                "but was not.");
+            .hasMessage("JSON documents are different:\n" +
+                "Different value found in node \"b\", expected: <2> but was: <1>.\n");
+    }
+
+    @Test
+    public void shouldAssertJson() {
+        assertThatThrownBy(() -> assertThatJson("{\"a\":{\"b\": 1}}").node("a").isEqualTo(json("{\"b\": 2}")))
+            .hasMessage("JSON documents are different:\n" +
+                "Different value found in node \"b\", expected: <2> but was: <1>.\n");
     }
 
     @Test

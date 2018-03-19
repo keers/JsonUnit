@@ -57,7 +57,7 @@ public class JsonAssert extends AbstractAssert<JsonAssert, Object> {
 
     public MapAssert<String, Object> isObject() {
         Node node = assertType(OBJECT);
-        return new MapAssert<>((Map<String, Object>) node.getValue())
+        return new JsonMapAssert((Map<String, Object>) node.getValue(), configuration)
             .as("Different value found in node \"%s\"", path)
             .usingComparator(new JsonComparator(configuration));
     }
@@ -87,6 +87,15 @@ public class JsonAssert extends AbstractAssert<JsonAssert, Object> {
     @Override
     public void isNull() {
         assertType(NULL);
+    }
+
+    @Override
+    public JsonAssert isEqualTo(Object expected) {
+        Diff diff = Diff.create(expected, actual, "fullJson", "", configuration);
+        if (!diff.similar()) {
+            failWithMessage(diff.toString());
+        }
+        return this;
     }
 
     @Override
